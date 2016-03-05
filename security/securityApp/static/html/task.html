@@ -4,7 +4,7 @@
          <div class="btn-group pull-right">
             <button type="button" class="btn btn-sm btn-default" data-toggle="modal" data-target="{{'.volunteermodal' + task.id}}">Assign</button>
             <button type="button" class="btn btn-sm btn-default" ng-hide="edit" ng-click="edit = !edit">Edit</button>
-            <button type="button" class="btn btn-sm btn-default" ng-show="edit" ng-click="edit = !edit; save(task)">Save</button>
+            <button type="button" class="btn btn-sm btn-default" ng-show="edit" ng-click="edit = !edit; taskService.save(task)">Save</button>
         </div>
     </div>
     <div class="panel-body">
@@ -23,19 +23,19 @@
         </div>
         <div class="row">
             <div class="col-md-4">Priority: 
-                <button class="btn btn-xs btn-default" ng-class="{'btn-danger': task.priority == 'UR'}" ng-click="setPriority(task, 'UR')"> Urgent</button>
-                <button class="btn btn-xs btn-default" ng-class="{'btn-warning': task.priority == 'ME'}" ng-click="setPriority(task, 'ME')">Medium</button>
-                <button class="btn btn-xs btn-default" ng-class="{'btn-info': task.priority == 'NU'}" ng-click="setPriority(task, 'NU')">Nonurgent</button>
-                <button class="btn btn-xs" ng-class="{'btn-default': task.priority != 'NI'}" ng-click="setPriority(task, 'NI')">If possible</button></div>
+                <button class="btn btn-xs btn-default" ng-class="{'btn-danger': task.priority == 'UR'}" ng-click="task.priority='UR'; taskService.save(task)"> Urgent</button>
+                <button class="btn btn-xs btn-default" ng-class="{'btn-warning': task.priority == 'ME'}" ng-click="task.priority='ME'; taskService.save(task)">Medium</button>
+                <button class="btn btn-xs btn-default" ng-class="{'btn-info': task.priority == 'NU'}" ng-click="task.priority='NU'; taskService.save(task)">Nonurgent</button>
+                <button class="btn btn-xs" ng-class="{'btn-default': task.priority != 'NI'}" ng-click="task.priority='NI'; taskService.save(task)">If possible</button></div>
 
             <div class="col-md-4"><button class="btn btn-xs btn-default" data-toggle="modal" data-target="{{'.skillmodal' + task.id}}"><span class="glyphicon glyphicon-edit"></span> Change </button> Skills: 
                 <span ng-repeat="skill in task.skills" class="label label-default" ng-style="{'background-color': skill.color}">{{skill.name}}</span>
             </div>
             <div class="col-md-4">Status: 
-                <button class="btn btn-xs btn-default" ng-class="{'btn-danger': task.status == 'TD'}" ng-click="setStatus(task, 'TD')">Todo</button>
-                <button class="btn btn-xs btn-default" ng-class="{'btn-warning': task.status == 'IP'}" ng-click="setStatus(task, 'IP')">In Progress</button>
-                <button class="btn btn-xs btn-default" ng-class="{'btn-success': task.status == 'CP'}" ng-click="setStatus(task, 'CP')">Complete</button>
-                <button class="btn btn-xs" ng-class="{'btn-default': task.status != 'VO'}" ng-click="setStatus(task, 'VO')">Void</button></div>
+                <button class="btn btn-xs btn-default" ng-class="{'btn-danger': task.status == 'TD'}" ng-click="task.status='TD'; taskService.save(task)">Todo</button>
+                <button class="btn btn-xs btn-default" ng-class="{'btn-warning': task.status == 'IP'}" ng-click="task.status='IP'; taskService.save(task)">In Progress</button>
+                <button class="btn btn-xs btn-default" ng-class="{'btn-success': task.status == 'CP'}" ng-click="task.status='CP'; taskService.save(task)">Complete</button>
+                <button class="btn btn-xs" ng-class="{'btn-default': task.status != 'VO'}" ng-click="task.status='VO'; taskService.save(task)">Void</button></div>
         </div>
     </div>
 
@@ -50,7 +50,7 @@
                     <a href="" ng-repeat="skill in skills" class="list-group-item" width="100%" ng-class="{'active': skill.selected}" ng-click="skill.selected = !skill.selected">{{skill.name}}</a>
                 </div>
 
-                <button ng-click="saveSkills(task, skills)" class="btn btn-default" data-dismiss="modal">Save</button>
+                <button ng-click="taskService.saveSkills(task, skills)" class="btn btn-default" data-dismiss="modal">Save</button>
             </div>
         </div>
     </div>
@@ -66,7 +66,7 @@
                     <a href="" ng-repeat="volunteer in volunteers" class="list-group-item" width="100%" ng-class="{'active': volunteer.selected}" ng-click="volunteer.selected = !volunteer.selected">{{volunteer.first_name}} {{volunteer.last_name}}</a>
                 </div>
 
-                <button ng-click="saveVolunteers(task, volunteers)" class="btn btn-default" data-dismiss="modal">Save</button>
+                <button ng-click="taskService.saveVolunteers(task, volunteers)" class="btn btn-default" data-dismiss="modal">Save</button>
             </div>
         </div>
     </div>

@@ -1,1 +1,103 @@
-<task ng-repeat="task in tasks" task=task></task>
+<div class="panel panel-primary" id="tasklist">
+    <div class="panel-heading">
+        <h1 style="text-align:center">Spark security tasks</h1>
+        <button class="btn btn-default" ng-show="hidefilters" ng-click="hidefilters=false">Show Filters   <span class="glyphicon glyphicon-chevron-down"></span></button>
+        <form class="well well-sm" ng-hide="hidefilters" style="color:black; margin-top:2em; margin-right:1em; margin-left:1em">
+            <button class="btn btn-default" ng-click="hidefilters=true">Hide Filters   <span class="glyphicon glyphicon-chevron-up"></span></button>
+            <h3 style="text-align:center">Filters</h3>
+            
+            <div class="row">
+                 <div class="form-group col-sm-3">
+                    <h4>Priority</h4>
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" ng-model="filterobject.priority.UR"> Urgent
+                        </label>
+                    </div>
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" ng-model="filterobject.priority.ME"> Medium
+                        </label>
+                    </div>
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" ng-model="filterobject.priority.NU"> Nonurgent
+                        </label>
+                    </div>
+                     <div class="checkbox">
+                        <label>
+                            <input type="checkbox" ng-model="filterobject.priority.NI"> If possible
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group col-sm-3">
+                    <h4>Status</h4>
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" ng-model="filterobject.status.TD"> Todo
+                        </label>
+                    </div>
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" ng-model="filterobject.status.IP"> In Progress
+                        </label>
+                    </div>
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" ng-model="filterobject.status.CP"> Completed
+                        </label>
+                    </div>
+                     <div class="checkbox">
+                        <label>
+                            <input type="checkbox" ng-model="filterobject.status.VO"> Canceled/Archived
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group col-sm-3">
+                    <h4>Skills <small>task must contain all of these</small></h4>
+                    <div ng-repeat="skill in skills" class="checkbox">
+                        <label>
+                            <input type="checkbox" ng-model="filterobject.skills[skill.name]"> {{skill.name}}
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group col-sm-3">
+                    <h4>Time</h4>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="timeFilterRadios" id="next10" value="next10">
+                            Next 10 minutes
+                        </label>
+                    </div>
+                     <div class="radio">
+                        <label>
+                            <input type="radio" name="timeFilterRadios" id="next30" value="next30">
+                            Next 30 minutes
+                        </label>
+                    </div>
+                     <div class="radio">
+                        <label>
+                            <input type="radio" name="timeFilterRadios" id="next60" value="next60">
+                            Next 60 minutes
+                        </label>
+                    </div>
+                     <div class="radio">
+                        <label>
+                            <input type="radio" name="timeFilterRadios" id="future" value="future">
+                            All future
+                        </label>
+                    </div>
+                     <div class="radio">
+                        <label>
+                            <input type="radio" name="timeFilterRadios" id="all" value="all">
+                            All
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="panel-body">
+        <task ng-repeat="task in tasks | filter:filterTasks" task=task></task>
+    </div>
+</div>
