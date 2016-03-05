@@ -1,0 +1,76 @@
+<div class="panel panel-default" ng-controller="TaskController">
+    <div class="panel-heading clearfix">
+    <h2 class="panel-title pull-left"> {{getPrettyDateTime(task.min_time)}}  -  {{getPrettyDateTime(task.max_time)}}</h2>
+         <div class="btn-group pull-right">
+            <button type="button" class="btn btn-sm btn-default" data-toggle="modal" data-target="{{'.volunteermodal' + task.id}}">Assign</button>
+            <button type="button" class="btn btn-sm btn-default" ng-hide="edit" ng-click="edit = !edit">Edit</button>
+            <button type="button" class="btn btn-sm btn-default" ng-show="edit" ng-click="edit = !edit; save(task)">Save</button>
+        </div>
+    </div>
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-md-8">
+                <h4 ng-hide="edit">{{task.description}}</h4>
+                <textarea ng-show="edit" class="form-control" ng-model="task.description">{{task.description}}</textarea>
+            </div>
+            <div class="col-md-4">Volunteers: 
+                <span ng-repeat="volunteer in task.volunteers">{{volunteer.first_name}} {{volunteer.last_name}}</span>
+            </div>
+            <br>
+            <br>
+            <br>
+            <br>
+        </div>
+        <div class="row">
+            <div class="col-md-4">Priority: 
+                <button class="btn btn-xs btn-default" ng-class="{'btn-danger': task.priority == 'UR'}" ng-click="setPriority(task, 'UR')"> Urgent</button>
+                <button class="btn btn-xs btn-default" ng-class="{'btn-warning': task.priority == 'ME'}" ng-click="setPriority(task, 'ME')">Medium</button>
+                <button class="btn btn-xs btn-default" ng-class="{'btn-info': task.priority == 'NU'}" ng-click="setPriority(task, 'NU')">Nonurgent</button>
+                <button class="btn btn-xs" ng-class="{'btn-default': task.priority != 'NI'}" ng-click="setPriority(task, 'NI')">If possible</button></div>
+
+            <div class="col-md-4"><button class="btn btn-xs btn-default" data-toggle="modal" data-target="{{'.skillmodal' + task.id}}"><span class="glyphicon glyphicon-edit"></span> Change </button> Skills: 
+                <span ng-repeat="skill in task.skills" class="label label-default" ng-style="{'background-color': skill.color}">{{skill.name}}</span>
+            </div>
+            <div class="col-md-4">Status: 
+                <button class="btn btn-xs btn-default" ng-class="{'btn-danger': task.status == 'TD'}" ng-click="setStatus(task, 'TD')">Todo</button>
+                <button class="btn btn-xs btn-default" ng-class="{'btn-warning': task.status == 'IP'}" ng-click="setStatus(task, 'IP')">In Progress</button>
+                <button class="btn btn-xs btn-default" ng-class="{'btn-success': task.status == 'CP'}" ng-click="setStatus(task, 'CP')">Complete</button>
+                <button class="btn btn-xs" ng-class="{'btn-default': task.status != 'VO'}" ng-click="setStatus(task, 'VO')">Void</button></div>
+        </div>
+    </div>
+
+    <div class="modal fade {{'skillmodal' + task.id}}" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type='button' class='close' data-dismiss="modal">&times;</button>
+                    <h3 class="modal-title">Select the skills needed for the task <small>"{{task.description}}"</small></h3>
+                </div>
+                <div class="list-group">
+                    <a href="" ng-repeat="skill in skills" class="list-group-item" width="100%" ng-class="{'active': skill.selected}" ng-click="skill.selected = !skill.selected">{{skill.name}}</a>
+                </div>
+
+                <button ng-click="saveSkills(task, skills)" class="btn btn-default" data-dismiss="modal">Save</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade {{'volunteermodal' + task.id}}" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type='button' class='close' data-dismiss="modal">&times;</button>
+                    <h3 class="modal-title">Select the volunteers you want to assign for the task <small>"{{task.description}}"</small></h3>
+                </div>
+                <div class="list-group">
+                    <a href="" ng-repeat="volunteer in volunteers" class="list-group-item" width="100%" ng-class="{'active': volunteer.selected}" ng-click="volunteer.selected = !volunteer.selected">{{volunteer.first_name}} {{volunteer.last_name}}</a>
+                </div>
+
+                <button ng-click="saveVolunteers(task, volunteers)" class="btn btn-default" data-dismiss="modal">Save</button>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+

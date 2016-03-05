@@ -28,14 +28,14 @@ class Task(models.Model):
 
     description = models.TextField()
     priority = models.CharField(max_length=2, choices=PRIORITY_CHOICES)
-    skills = MultiSelectField(max_length=2, choices=SKILL_CHOICES, blank=True)
+    skills = models.ManyToManyField('Skill', blank=True)
     min_time = models.DateTimeField()
     max_time = models.DateTimeField()
     volunteers = models.ManyToManyField('Volunteer', blank=True)
     status = models.CharField(max_length=2, choices=STATUS_CHOICES, default='TD')
 
     def __str__(self):
-        return description
+        return self.description
 
 class Volunteer(models.Model):
     first_name = models.CharField(max_length=30)
@@ -43,7 +43,7 @@ class Volunteer(models.Model):
     phone_number = PhoneNumberField()
     can_text = models.BooleanField()
     currently_here = models.BooleanField(default=False)
-    skills = MultiSelectField(max_length=2, choices=SKILL_CHOICES, blank=True)
+    skills = models.ManyToManyField('Skill', blank=True)
     shifts = models.ManyToManyField('Shift', blank=True)
     comments = models.TextField(blank=True)
     
@@ -57,3 +57,10 @@ class Shift(models.Model):
     def __str__(self):
         return str(self.time_in) + " - " + str(self.time_out)
 
+class Skill(models.Model):
+    name = models.CharField(max_length=30)
+    necessary = models.BooleanField(default=True)
+    color = models.CharField(max_length=7)
+    
+    def __str__(self):
+        return self.name

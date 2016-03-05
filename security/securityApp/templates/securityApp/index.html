@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+    {% load i18n %}
+    {% block content %}
+    <div class="container content" ng-app="securityApp">
+        <div ui-view>Loading...</div>
+    </div>
+    {% endblock content %}
+    {% block extra_javascript %}
+    {% load staticfiles %}
+    <script src="{% static "javascript/app.js" %}"></script>
+    {% endblock extra_javascript %}
