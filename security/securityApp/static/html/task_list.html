@@ -1,6 +1,13 @@
 <div class="panel panel-primary" id="tasklist">
     <div class="panel-heading">
         <h1 style="text-align:center">Spark security tasks</h1>
+        <div class="alert alert-success" role="alert" ng-show="showtaskaddedalert">Task successfully added!</div>
+        <button class="btn btn-default" ng-hide="showaddtaskform" ng-click="showtaskaddedalert=false; showaddtaskform=true">Add Task  <span class="glyphicon glyphicon-plus"></span></button>
+        <div class="well well-sm" ng-show="showaddtaskform" style="color: black; margin-top:2em; margin-right:1em; margin-left:1em;">
+            <button class="btn btn-danger pull-right" ng-click="showaddtaskform=false">Cancel</button>
+            <taskform></taskform>
+        </div>
+
         <button class="btn btn-default" ng-show="hidefilters" ng-click="hidefilters=false">Show Filters   <span class="glyphicon glyphicon-chevron-down"></span></button>
         <form class="well well-sm" ng-hide="hidefilters" style="color:black; margin-top:2em; margin-right:1em; margin-left:1em">
             <button class="btn btn-default" ng-click="hidefilters=true">Hide Filters   <span class="glyphicon glyphicon-chevron-up"></span></button>
@@ -65,39 +72,55 @@
                     <h4>Time</h4>
                     <div class="radio">
                         <label>
-                            <input type="radio" name="timeFilterRadios" id="next10" value="next10">
+                            <input type="radio" ng-model="filterobject.time" name="timeFilterRadios" id="next10" value="next10">
                             Next 10 minutes
                         </label>
                     </div>
                      <div class="radio">
                         <label>
-                            <input type="radio" name="timeFilterRadios" id="next30" value="next30">
+                            <input type="radio" ng-model="filterobject.time" name="timeFilterRadios" id="next30" value="next30">
                             Next 30 minutes
                         </label>
                     </div>
                      <div class="radio">
                         <label>
-                            <input type="radio" name="timeFilterRadios" id="next60" value="next60">
+                            <input type="radio" ng-model="filterobject.time" name="timeFilterRadios" id="next60" value="next60">
                             Next 60 minutes
                         </label>
                     </div>
-                     <div class="radio">
+                    <div class="radio">
                         <label>
-                            <input type="radio" name="timeFilterRadios" id="future" value="future">
-                            All future
+                            <input type="radio" ng-model="filterobject.time" name="timeFilterRadios" id="futuretoday" value="futuretoday">
+                            Today in the future
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" ng-model="filterobject.time" name="timeFilterRadios" id="today" value="today">
+                            All tasks today
                         </label>
                     </div>
                      <div class="radio">
                         <label>
-                            <input type="radio" name="timeFilterRadios" id="all" value="all">
-                            All
+                            <input type="radio" ng-model="filterobject.time" name="timeFilterRadios" id="future" value="future">
+                            All future tasks
+                        </label>
+                    </div>
+                     <div class="radio">
+                        <label>
+                            <input type="radio" ng-model="filterobject.time" name="timeFilterRadios" id="all" value="all">
+                            All tasks
                         </label>
                     </div>
                 </div>
             </div>
         </form>
     </div>
-    <div class="panel-body">
-        <task ng-repeat="task in tasks | filter:filterTasks" task=task></task>
+    <div class="panel-body clearfix">
+        <button class="btn btn-primary pull-right" ng-click="refreshTaskList()">Refresh Tasks<span class="glyphicon glyphicon-refresh"> </span></button>
+        <br>
+        <br>
+        <h3 ng-if="displayedTasks.length==0">No tasks right now! If this seems wrong, try adjusting your filters.</h3>
+        <task ng-repeat="task in displayedTasks=(tasks | filter:filterTasks)" task=task></task>
     </div>
 </div>

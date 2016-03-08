@@ -1,0 +1,65 @@
+<div ng-controller="TaskAddController">
+    <h3 style="text-align: center">New Task</h2>
+    <div class="alert alert-danger" ng-if="validationErrors != undefined" role="alert">{{validationErrors}}</div>
+
+    <div class="row">
+    <div class="col-sm-6 col-sm-offset-3">
+    <form> 
+       <div class="form-group">
+            <label>Description of the task</label>
+            <textarea class="form-control" ng-model="newTask.description">{{task.description}}</textarea>
+        </div>
+        <div class="form-group">
+            <label>Priority</label>
+            <div class="radio">
+                <label>
+                    <input type="radio" name="priorityOptions" value="UR" ng-model="newTask.priority">Urgent
+                </label>
+            </div>
+            <div class="radio">
+                <label>
+                    <input type="radio" name="priorityOptions" value="ME" ng-model="newTask.priority" checked>Medium
+                </label>
+            </div>
+            <div class="radio">
+                <label>
+                    <input type="radio" name="priorityOptions" value="NU" ng-model="newTask.priority">Nonurgent
+                </label>
+            </div>
+            <div class="radio">
+                <label>
+                    <input type="radio" name="priorityOptions" value="NI" ng-model="newTask.priority">If possible
+                </label>
+            </div>
+        </div>
+        <div class="form-group">
+            <label>Earliest time this task should be completed</label>
+            <div class='input-group date' id='mindatetimepickeradd'>
+                <input type='text' class="form-control"/>
+                <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                </span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label>Latest time this task should be completed</label>
+            <div class='input-group date' id='maxdatetimepickeradd'>
+                <input type='text' class="form-control"/>
+                <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                </span>
+            </div>
+        </div>
+         <div class="form-group">
+            <label>Skills Required</label>
+            <div class="checkbox" ng-repeat="skill in skills">
+                <label>
+                    <input type="checkbox" ng-model="taskskills[skill.name]">{{skill.name}}
+                </label>
+            </div>
+        </div>
+        <button class="btn btn-primary" type="submit" ng-click="addTask()">Add task!</button>
+    </form>
+    </div>
+    </div>
+</div>

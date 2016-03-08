@@ -29,8 +29,49 @@ app.factory('dateUtils', function() {
         
     };
 
+    var timeUntil = function(dateString) {
+        var today = new Date();
+        var newDate = new Date(Date.parse(dateString));
+        // This does not handle the case where one day of the program is in a different month than another.
+        var diffDays = newDate.getDate() - today.getDate();
+        var diffHrs = newDate.getHours() - today.getHours();
+        var diffMins = newDate.getMinutes() - today.getMinutes();
+        return {
+            days: diffDays,
+            hours: diffHrs,
+            minutes: diffMins,
+        }
+    }
+
+    var twodigits = function(number) {
+        if (number < 10) {
+            return "0" + number;
+        } else {
+            return number;
+        }
+    }
+
+    var getDateForPost = function(datestring) {
+            var date = new Date(Date.parse(datestring));
+            var hours = date.getHours() + 5;
+            var days = date.getDate();
+            if (hours > 24) {
+                hours = hours - 24;
+                days = days + 1;
+            }
+            return date.getFullYear() + "-" + 
+                    twodigits(date.getMonth() + 1) + "-" + 
+                    twodigits(days) + "T" + 
+                    twodigits(hours) + ":" + 
+                    twodigits(date.getMinutes()) + ":" + 
+                    twodigits(date.getSeconds());
+ 
+    }
+
     return {
         getPrettyDateTime: getPrettyDateTime,
+        timeUntil: timeUntil,
+        getDateForPost: getDateForPost,
     };
 })
 

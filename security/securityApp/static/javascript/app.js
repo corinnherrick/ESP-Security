@@ -8,6 +8,11 @@ app.config(function ($stateProvider, $urlRouterProvider) {
             templateUrl: "/static/html/task_list.html",
             controller: "TaskListController",
         })
+        .state('addTask', {
+            url: "/tasks/add",
+            templateUrl: "/static/html/task_edit.html",
+            controller: "TaskAddController",
+        })
 
 });
 app.directive('task', function() {
@@ -16,6 +21,14 @@ app.directive('task', function() {
         restrict: 'E',
         scope: {
             task: '=',
+        },
+    };
+});
+app.directive('taskform', function() {
+    return {
+        templateUrl: "/static/html/task_edit.html",
+        restrict: 'E',
+        scope: {
         },
     };
 });

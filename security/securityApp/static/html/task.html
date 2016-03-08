@@ -1,6 +1,35 @@
 <div class="panel panel-default" ng-controller="TaskController">
     <div class="panel-heading clearfix">
-    <h2 class="panel-title pull-left"> {{getPrettyDateTime(task.min_time)}}  -  {{getPrettyDateTime(task.max_time)}}</h2>
+    <h2 class="panel-title pull-left" ng-hide="editTime"> {{getPrettyDateTime(task.min_time)}}  -  {{getPrettyDateTime(task.max_time)}} <button ng-click="editTimes()" class="btn btn-xs btn-default"><span class="glyphicon glyphicon-edit"></span></button></h2>
+    <h2 class="panel-title pull-left" ng-show="editTime"> 
+        <div class="row form-inline">
+            <div class="col-sm-3">
+                <div class="form-group">
+                    <div class='input-group date' id='mindatetimepicker{{task.id}}'>
+                        <input type='text' class="form-control" />
+                        <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-calendar"></span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-1">
+                <p style="text-align:center">--</p>
+            </div>
+            <div class="col-sm-3">
+                <div class="form-group">
+                    <div class='input-group date' id='maxdatetimepicker{{task.id}}'>
+                        <input type='text' class="form-control"/>
+                        <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-calendar"></span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+ 
+            <button ng-click="editTime=false; taskService.save(task)" class="btn btn-default"><span class="glyphicon glyphicon-ok"></span> Save</button>
+        </div>
+    </h2>
          <div class="btn-group pull-right">
             <button type="button" class="btn btn-sm btn-default" data-toggle="modal" data-target="{{'.volunteermodal' + task.id}}">Assign</button>
             <button type="button" class="btn btn-sm btn-default" ng-hide="edit" ng-click="edit = !edit">Edit</button>
